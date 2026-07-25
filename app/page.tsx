@@ -24,7 +24,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-content px-4 py-14 md:py-20">
           <p className="text-sm font-semibold uppercase tracking-widest text-nba-blue">Independent NBA fan hub</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-black leading-tight text-slate-900 md:text-6xl">
-            Your daily home for the <span className="text-nba-red">NBA</span>
+            <span className="text-nba-red">nbabite</span> - your nba streams home website
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-600">
             Schedules, scores, every team, the biggest stars — LeBron James, Stephen Curry, Victor Wembanyama —
@@ -110,6 +110,34 @@ export default function HomePage() {
           {latestNews.map((a) => (
             <ArticleCard key={a.slug} article={a} />
           ))}
+        </div>
+      </section>
+
+      {/* REDDIT HERITAGE */}
+      <section className="mx-auto max-w-content px-4 py-12">
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-card">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl" aria-hidden="true">👽</span>
+            <h2 className="text-2xl font-black text-slate-900 md:text-3xl">From Reddit to NBABite</h2>
+          </div>
+          <p className="mt-4 text-slate-600">
+            NBABite grew out of the <strong>Reddit</strong> community <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">r/nbastreams</code>,
+            the place where NBA fans gathered to share where to watch every game. In 2019, Reddit banned
+            r/nbastreams (along with other stream-sharing subreddits) over copyright concerns, and the community
+            had to find a new home.
+          </p>
+          <p className="mt-3 text-slate-600">
+            That migration is exactly what gave rise to independent hubs like <strong>NBABite</strong>. Born from the
+            spirit of r/nbastreams, NBABite carries the community forward — but today it points fans to the
+            <strong> legal</strong> ways to watch: NBA League Pass, ESPN, NBC, Amazon Prime Video and more. Same
+            love for the game, the right way to support it.
+          </p>
+          <Link
+            href="/watch"
+            className="mt-5 inline-block rounded-lg bg-nba-blue px-5 py-3 font-bold text-white transition hover:bg-nba-red"
+          >
+            See the legal ways to watch
+          </Link>
         </div>
       </section>
 
