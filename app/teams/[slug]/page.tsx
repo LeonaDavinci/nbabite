@@ -50,8 +50,12 @@ export default function TeamPage({ params }: { params: { slug: string } }) {
               <h1 className="mt-1 text-3xl font-black md:text-5xl">{team.name}</h1>
               <p className="mt-2 max-w-xl text-white/90">{team.description}</p>
             </div>
-            <div className="text-center">
-              <div className="text-6xl font-black drop-shadow">{team.shortName}</div>
+            <div className="flex items-center justify-center rounded-xl bg-white/95 p-4">
+              <img
+                src={`/images/teams/${team.slug}.png`}
+                alt={`${team.name} logo`}
+                className="h-24 w-auto object-contain"
+              />
             </div>
           </div>
         </div>

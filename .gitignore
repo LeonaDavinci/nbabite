@@ -21,6 +21,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# scrape working dir (used only to fetch external assets)
+.scrape/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

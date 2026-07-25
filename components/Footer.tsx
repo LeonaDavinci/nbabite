@@ -33,8 +33,9 @@ export function Footer() {
       <div className="mx-auto grid max-w-content gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-md bg-nba-red font-display text-white">N</span>
-            <span className="text-base font-extrabold">NBA<span className="text-nba-red">Bite</span></span>
+            <span className="flex h-8 items-center rounded-md bg-nba-red px-2">
+              <img src="/logo.webp" alt="NBABite" className="h-5 w-auto" />
+            </span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-slate-600">
             An independent NBA fan hub for schedules, teams, players and the legal ways to watch basketball.

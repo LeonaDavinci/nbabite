@@ -15,9 +15,8 @@ export function Header() {
       <a href="#main" className="skip-link">Skip to content</a>
       <div className="mx-auto flex max-w-content items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label="NBABite home">
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-nba-red font-display text-white">N</span>
-          <span className="text-lg font-extrabold tracking-tight">
-            NBA<span className="text-nba-red">Bite</span>
+          <span className="flex h-9 items-center rounded-md bg-nba-red px-2">
+            <img src="/logo.webp" alt="NBABite" className="h-6 w-auto" />
           </span>
         </Link>
         <nav aria-label="Primary" className="hidden gap-1 md:flex">

@@ -43,7 +43,7 @@ export const TEAMS: Team[] = [
 ];
 
 export const PLAYERS: Player[] = [
-  { id: "lebron", slug: "lebron-james", name: "LeBron James", firstName: "LeBron", lastName: "James", teamSlug: "lakers", position: "Forward", jersey: 23, height: "6'9\"", weight: "250 lb", born: "1984-12-30", birthplace: "Akron, Ohio", draftYear: 2003, ppg: 25.0, rpg: 7.3, apg: 8.3, isStar: true, bio: "LeBron James is a four-time NBA champion and widely regarded as one of the greatest basketball players of all time. Drafted first overall in 2003, he has led three franchises to titles and continues to defy age with elite all-around production for the Los Angeles Lakers." },
+  { id: "lebron", slug: "lebron-james", name: "LeBron James", firstName: "LeBron", lastName: "James", teamSlug: "76ers", position: "Forward", jersey: 23, height: "6'9\"", weight: "250 lb", born: "1984-12-30", birthplace: "Akron, Ohio", draftYear: 2003, ppg: 25.0, rpg: 7.3, apg: 8.3, isStar: true, bio: "LeBron James is a four-time NBA champion and widely regarded as one of the greatest basketball players of all time. After a landmark move to the Philadelphia 76ers, he now pairs with Joel Embiid as the franchise chases another title, bringing elite playmaking and veteran leadership to the City of Brotherly Love." },
   { id: "curry", slug: "stephen-curry", name: "Stephen Curry", firstName: "Stephen", lastName: "Curry", teamSlug: "warriors", position: "Guard", jersey: 30, height: "6'2\"", weight: "185 lb", born: "1988-03-14", birthplace: "Akron, Ohio", draftYear: 2009, ppg: 26.4, rpg: 4.5, apg: 5.1, isStar: true, bio: "Stephen Curry is the greatest shooter in NBA history and the engine of the Golden State Warriors dynasty. A two-time MVP and four-time champion, he reshaped the modern game with range and off-ball movement." },
   { id: "wemby", slug: "victor-wembanyama", name: "Victor Wembanyama", firstName: "Victor", lastName: "Wembanyama", teamSlug: "spurs", position: "Center", jersey: 1, height: "7'4\"", weight: "210 lb", born: "2004-01-04", birthplace: "Le Chesnay, France", draftYear: 2023, ppg: 21.4, rpg: 10.6, apg: 3.6, isStar: true, bio: "Victor Wembanyama is a generational prospect for the San Antonio Spurs, pairing unicorn skill at 7'4\" with elite rim protection and perimeter touch. The 2024 Rookie of the Year is the face of the franchise's next era." },
   { id: "jokic", slug: "nikola-jokic", name: "Nikola Jokic", firstName: "Nikola", lastName: "Jokic", teamSlug: "nuggets", position: "Center", jersey: 15, height: "6'11\"", weight: "284 lb", born: "1995-02-19", birthplace: "Sombor, Serbia", draftYear: 2014, ppg: 26.4, rpg: 12.4, apg: 9.0, isStar: true, bio: "Nikola Jokic is a three-time MVP and the hub of the Denver Nuggets' historic offense. The Serbian big man blends scoring, rebounding and elite playmaking from the post." },
@@ -76,6 +76,24 @@ export const GAMES: Game[] = [
 
 export const ARTICLES: Article[] = [
   {
+    slug: "lebron-james-joins-philadelphia-76ers",
+    title: "Breaking: LeBron James Joins the Philadelphia 76ers in a Blockbuster Move",
+    excerpt: "In a stunning shake-up, four-time champion LeBron James is headed to Philadelphia to team with Joel Embiid — instantly reshaping the NBA's balance of power.",
+    category: "Breaking News",
+    author: "NBABite Editorial",
+    publishedAt: "2026-07-26T08:00:00Z",
+    updatedAt: "2026-07-26T08:00:00Z",
+    tags: ["LeBron James", "Philadelphia 76ers", "blockbuster", "breaking"],
+    breaking: true,
+    body: [
+      "The NBA world was turned on its head today as four-time champion LeBron James agreed to join the Philadelphia 76ers, pairing the league's all-time leading scorer with reigning MVP-caliber center Joel Embiid in one of the most consequential moves in recent memory.",
+      "The deal sends James to the City of Brotherly Love after a decorated chapter out West, immediately making the 76ers the offseason's headline story and a preseason favorite in the Eastern Conference. With Embiid controlling the paint and James orchestrating the offense, Philadelphia now boasts one of the most intimidating one-two punches in the league.",
+      "For James, 41, the move is another rewrite of his legacy — a fourth franchise, a fresh title window, and a chance to chase ring number five alongside one of the game's most dominant big men. For the 76ers, it accelerates a timeline that already featured a deep, talented core.",
+      "Analysts are already debating how the fit works on the floor: Embiid's post dominance and James' tempo-bending playmaking could be complementary, but spacing, rotation minutes and defensive matchups will define whether this superteam reaches its ceiling.",
+      "One thing is certain — the 76ers' schedule just became must-watch television, and the road to the Finals in the East now runs through Philadelphia. NBABite will track every twist of the story as it develops.",
+    ],
+  },
+  {
     slug: "how-to-watch-nba-2025-26-season",
     title: "How to Watch the NBA in the 2025-26 Season: Every Legal Option",
     excerpt: "From NBA League Pass to the new broadcast deals with ESPN, NBC and Amazon, here is the complete legal guide to watching NBA basketball.",
@@ -106,16 +124,16 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "lebron-james-lakers-chasing-history",
-    title: "LeBron James and the Lakers: Chasing History in Year 22",
-    excerpt: "Even in his 22nd season, LeBron James keeps rewriting the record books. A look at his legacy and the Lakers' title window.",
+    title: "LeBron James' Lakers Legacy: A Look Back at a Purple & Gold Chapter",
+    excerpt: "Before his stunning move to Philadelphia, LeBron James authored a memorable Lakers chapter. A look back at his legacy in Los Angeles.",
     category: "Player Spotlight",
     author: "NBABite Editorial",
     publishedAt: "2026-01-18T09:00:00Z",
     tags: ["LeBron", "Lakers", "legacy"],
     body: [
-      "LeBron James entered the league in 2003 and, two decades later, remains a difference-maker for the Los Angeles Lakers. He is the NBA's all-time leading scorer and a four-time champion.",
-      "The Lakers' window hinges on pairing his playmaking with a healthy supporting cast and rim protection. Even as Father Time approaches, James' basketball IQ keeps him among the league's most impactful forwards.",
-      "Whether he adds to his ring count or simply extends his historic longevity, his place among the game's immortals is secure.",
+      "LeBron James entered the league in 2003 and, across two decades, became the NBA's all-time leading scorer and a four-time champion. His Los Angeles chapter delivered a 2020 title in the Orlando bubble and some of the most watched basketball of his era.",
+      "In Los Angeles he reinforced his reputation as a versatile, high-IQ forward capable of lifting any roster. His playmaking, size and timing made the Lakers a perennial contender during his tenure.",
+      "Now beginning a new chapter in Philadelphia, James leaves behind a Lakers legacy defined by resilience and a championship — and his place among the game's immortals is secure.",
     ],
   },
   {

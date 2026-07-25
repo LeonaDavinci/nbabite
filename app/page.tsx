@@ -9,6 +9,7 @@ export default function HomePage() {
   const stars = starPlayers().slice(0, 8);
   const featuredGames = GAMES.slice(0, 6);
   const latestNews = ARTICLES.slice(0, 3);
+  const breaking = ARTICLES.find((a) => a.breaking);
 
   return (
     <>
@@ -38,6 +39,27 @@ export default function HomePage() {
           </dl>
         </div>
       </section>
+
+      {/* BREAKING NEWS */}
+      {breaking && (
+        <section className="mx-auto max-w-content px-4 pt-8">
+          <Link
+            href={`/news/${breaking.slug}`}
+            className="block overflow-hidden rounded-2xl border-2 border-nba-red bg-white shadow-card transition hover:shadow-lg"
+          >
+            <div className="flex flex-col gap-3 p-5 md:flex-row md:items-center">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-nba-red px-3 py-1 text-xs font-black uppercase tracking-wider text-white">
+                🔥 Breaking
+              </span>
+              <div>
+                <h2 className="text-lg font-black text-slate-900 md:text-2xl">{breaking.title}</h2>
+                <p className="mt-1 text-sm text-slate-600">{breaking.excerpt}</p>
+              </div>
+              <span className="md:ml-auto text-sm font-bold text-nba-red hover:underline">Read more →</span>
+            </div>
+          </Link>
+        </section>
+      )}
 
       {/* UPCOMING GAMES */}
       <section className="mx-auto max-w-content px-4 py-12">

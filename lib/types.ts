@@ -59,4 +59,5 @@ export interface Article {
   updatedAt?: string;
   body: string[];
   tags: string[];
+  breaking?: boolean;
 }

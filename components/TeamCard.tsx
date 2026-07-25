@@ -8,12 +8,15 @@ export function TeamCard({ team }: { team: Team }) {
       className="group block overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div
-        className="flex h-20 items-center justify-center"
-        style={{ background: `linear-gradient(135deg, ${team.primaryColor}, ${team.secondaryColor})` }}
+        className="flex h-24 items-center justify-center border-b-4 bg-slate-50"
+        style={{ borderColor: team.primaryColor }}
       >
-        <span className="text-2xl font-black tracking-widest text-white drop-shadow">
-          {team.shortName}
-        </span>
+        <img
+          src={`/images/teams/${team.slug}.png`}
+          alt={`${team.name} logo`}
+          className="h-16 w-auto object-contain"
+          loading="lazy"
+        />
       </div>
       <div className="p-4">
         <h3 className="font-bold text-slate-900 group-hover:text-nba-blue">{team.name}</h3>
