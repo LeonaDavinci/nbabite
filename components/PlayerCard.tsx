@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Player } from "@/lib/types";
 import { getTeam } from "@/lib/data";
 import { TeamLogo } from "@/components/TeamLogo";
+import { PlayerAvatar } from "@/components/PlayerAvatar";
 
 export function PlayerCard({ player }: { player: Player }) {
   const team = getTeam(player.teamSlug);
@@ -11,13 +12,7 @@ export function PlayerCard({ player }: { player: Player }) {
       className="group block rounded-xl border border-slate-200 bg-white p-4 shadow-card transition hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="flex items-center gap-3">
-        <span
-          className="grid h-12 w-12 shrink-0 place-items-center rounded-full text-lg font-black text-white"
-          style={{ background: team?.primaryColor ?? "#1D428A" }}
-        >
-          {player.firstName[0]}
-          {player.lastName[0]}
-        </span>
+        <PlayerAvatar player={player} size={24} />
         <div>
           <h3 className="font-bold leading-tight text-slate-900 group-hover:text-nba-blue">{player.name}</h3>
           <p className="flex items-center gap-1.5 text-xs text-slate-500">

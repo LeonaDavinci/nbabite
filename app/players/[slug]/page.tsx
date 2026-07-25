@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { playerJsonLd, pageMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/format";
 import { TeamLogo } from "@/components/TeamLogo";
+import { PlayerAvatar } from "@/components/PlayerAvatar";
 
 export function generateStaticParams() {
   return PLAYERS.map((p) => ({ slug: p.slug }));
@@ -46,13 +47,13 @@ export default function PlayerPage({ params }: { params: { slug: string } }) {
               className="grid h-40 place-items-center rounded-2xl text-white shadow-card"
               style={{ background: team?.primaryColor ?? "#1D428A" }}
             >
-              <span className="text-6xl font-black">
-                {player.firstName[0]}
-                {player.lastName[0]}
-              </span>
+              <PlayerAvatar player={player} size={120} className="ring-4 ring-white/40" />
             </div>
             <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
-              <h1 className="text-2xl font-black text-slate-900">{player.name}</h1>
+              <h1 className="flex items-center gap-2 text-2xl font-black text-slate-900">
+                <PlayerAvatar player={player} size={24} className="shrink-0" />
+                {player.name}
+              </h1>
               <p className="flex items-center gap-1.5 text-sm text-slate-500">
                 {team && <TeamLogo slug={team.slug} size={20} className="shrink-0" />}
                 {team?.name} · #{player.jersey} · {player.position}

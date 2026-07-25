@@ -36,6 +36,7 @@ export interface Player {
   apg: number;
   bio: string;
   isStar?: boolean;
+  headshot?: string;
 }
 
 export interface Game {
