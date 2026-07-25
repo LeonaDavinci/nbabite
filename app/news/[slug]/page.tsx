@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ARTICLES, getArticle } from "@/lib/data";
+import { ARTICLES, getArticle, teamForTag } from "@/lib/data";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { articleJsonLd, pageMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/format";
+import { TeamLogo } from "@/components/TeamLogo";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -54,12 +55,19 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {article.tags.map((t) => (
-            <span key={t} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-              #{t}
-            </span>
-          ))}
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          {article.tags.map((t) => {
+            const team = teamForTag(t);
+            return (
+              <span
+                key={t}
+                className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
+              >
+                {team && <TeamLogo slug={team.slug} size={18} />}
+                #{t}
+              </span>
+            );
+          })}
         </div>
 
         <div className="mt-8">

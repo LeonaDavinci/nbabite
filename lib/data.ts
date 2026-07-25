@@ -196,3 +196,17 @@ export function getPlayersByTeam(teamSlug: string): Player[] {
 export function starPlayers(): Player[] {
   return PLAYERS.filter((p) => p.isStar);
 }
+
+// Resolve a news/article tag to a Team when the tag refers to a franchise
+// (e.g. "Lakers", "76ers", "Warriors"). Used to show team logos next to tags.
+export function teamForTag(tag: string): Team | undefined {
+  const t = tag.trim().toLowerCase();
+  if (!t) return undefined;
+  return TEAMS.find(
+    (team) =>
+      team.slug === t ||
+      team.shortName.toLowerCase() === t ||
+      team.name.toLowerCase().includes(t),
+  );
+}
+

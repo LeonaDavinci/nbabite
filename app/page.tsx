@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { TEAMS, GAMES, ARTICLES, starPlayers } from "@/lib/data";
+import { TEAMS, GAMES, ARTICLES, starPlayers, teamForTag } from "@/lib/data";
 import { GameCard } from "@/components/GameCard";
 import { PlayerCard } from "@/components/PlayerCard";
 import { TeamCard } from "@/components/TeamCard";
 import { ArticleCard } from "@/components/ArticleCard";
+import { TeamLogo } from "@/components/TeamLogo";
 
 export default function HomePage() {
   const stars = starPlayers().slice(0, 8);
@@ -48,6 +49,12 @@ export default function HomePage() {
             className="block overflow-hidden rounded-2xl border-2 border-nba-red bg-white shadow-card transition hover:shadow-lg"
           >
             <div className="flex flex-col gap-3 p-5 md:flex-row md:items-center">
+              {(() => {
+                const team = breaking.tags.map(teamForTag).find(Boolean);
+                return team ? (
+                  <TeamLogo slug={team.slug} size={48} className="shrink-0" />
+                ) : null;
+              })()}
               <span className="inline-flex w-fit items-center gap-2 rounded-full bg-nba-red px-3 py-1 text-xs font-black uppercase tracking-wider text-white">
                 🔥 Breaking
               </span>

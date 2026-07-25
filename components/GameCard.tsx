@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Game } from "@/lib/types";
 import { getTeam } from "@/lib/data";
 import { formatDateTime } from "@/lib/format";
+import { TeamLogo } from "@/components/TeamLogo";
 
 export function GameCard({ game }: { game: Game }) {
   const home = getTeam(game.homeTeamSlug);
@@ -15,11 +16,13 @@ export function GameCard({ game }: { game: Game }) {
       </div>
       <div className="mt-3 flex items-center justify-between">
         <Link href={`/teams/${away.slug}`} className="flex items-center gap-2 hover:text-nba-blue">
+          <TeamLogo slug={away.slug} size={32} className="shrink-0" />
           <span className="font-black text-slate-400">{away.shortName}</span>
           <span className="text-sm font-semibold">{away.city}</span>
         </Link>
         <span className="text-xs text-slate-400">@</span>
         <Link href={`/teams/${home.slug}`} className="flex items-center gap-2 hover:text-nba-blue">
+          <TeamLogo slug={home.slug} size={32} className="shrink-0" />
           <span className="text-sm font-semibold">{home.city}</span>
           <span className="font-black text-slate-400">{home.shortName}</span>
         </Link>

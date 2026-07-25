@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Player } from "@/lib/types";
 import { getTeam } from "@/lib/data";
+import { TeamLogo } from "@/components/TeamLogo";
 
 export function PlayerCard({ player }: { player: Player }) {
   const team = getTeam(player.teamSlug);
@@ -19,7 +20,10 @@ export function PlayerCard({ player }: { player: Player }) {
         </span>
         <div>
           <h3 className="font-bold leading-tight text-slate-900 group-hover:text-nba-blue">{player.name}</h3>
-          <p className="text-xs text-slate-500">{team?.name} · #{player.jersey}</p>
+          <p className="flex items-center gap-1.5 text-xs text-slate-500">
+            {team && <TeamLogo slug={team.slug} size={18} className="shrink-0" />}
+            {team?.name} · #{player.jersey}
+          </p>
         </div>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-2 text-center">
