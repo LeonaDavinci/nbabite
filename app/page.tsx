@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { TEAMS, GAMES, ARTICLES, starPlayers, teamForTag } from "@/lib/data";
 import { GameCard } from "@/components/GameCard";
@@ -5,6 +6,10 @@ import { PlayerCard } from "@/components/PlayerCard";
 import { TeamCard } from "@/components/TeamCard";
 import { ArticleCard } from "@/components/ArticleCard";
 import { TeamLogo } from "@/components/TeamLogo";
+
+export const metadata: Metadata = {
+  title: "NBABite - Lebron to 76er",
+};
 
 export default function HomePage() {
   const stars = starPlayers().slice(0, 8);
