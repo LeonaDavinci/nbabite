@@ -33,7 +33,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-content gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-8 items-center rounded-md bg-nba-red px-2">
+            <span className="flex h-8 items-center rounded-md border border-slate-200 bg-white px-2">
               <img src="/logo.webp" alt="NBABite" className="h-5 w-auto" />
             </span>
           </div>

@@ -15,7 +15,7 @@ export function Header() {
       <a href="#main" className="skip-link">Skip to content</a>
       <div className="mx-auto flex max-w-content items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label="NBABite home">
-          <span className="flex h-9 items-center rounded-md bg-nba-red px-2">
+          <span className="flex h-9 items-center rounded-md border border-slate-200 bg-white px-2">
             <img src="/logo.webp" alt="NBABite" className="h-6 w-auto" />
           </span>
         </Link>
