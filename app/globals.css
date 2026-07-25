@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --fg: #0b0b0f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Accessible focus ring for keyboard users */
+:focus-visible {
+  outline: 3px solid #1d428a;
+  outline-offset: 2px;
+}
+
+/* Skip link for screen readers / SEO */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: #1d428a;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Subtle court-gradient used on hero sections */
+.court-gradient {
+  background:
+    radial-gradient(1200px 400px at 50% -10%, rgba(29,66,138,0.10), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%);
+}
+
+.prose-nba p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+  color: #2a2d36;
+}
+.prose-nba h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 1.75rem 0 0.75rem;
+  color: #0b0b0f;
+}
+.prose-nba h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+}
+.prose-nba ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  color: #2a2d36;
+}
+.prose-nba a {
+  color: #1d428a;
+  text-decoration: underline;
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1D428A"/>
+      <stop offset="100%" stop-color="#0B0B0F"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g>
+    <rect x="80" y="220" width="120" height="120" rx="24" fill="#E4002B"/>
+    <text x="140" y="300" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="80" font-weight="900" fill="#ffffff">N</text>
+    <text x="232" y="312" font-family="Arial Black, Arial, sans-serif" font-size="76" font-weight="900" fill="#ffffff">NBA<tspan fill="#E4002B">Bite</tspan></text>
+  </g>
+  <text x="80" y="430" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="#ffffff">Your daily home for the NBA</text>
+  <text x="80" y="486" font-family="Arial, sans-serif" font-size="32" fill="#C9D4EC">Schedules · Teams · Stars · Where to Watch</text>
+</svg>
