@@ -8,7 +8,7 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { TeamLogo } from "@/components/TeamLogo";
 
 export const metadata: Metadata = {
-  title: "NBABite - Lebron to 76er",
+  title: "NBABite - Lebron to 76er | NBA Streams",
 };
 
 export default function HomePage() {

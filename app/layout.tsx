@@ -9,13 +9,15 @@ import { websiteJsonLd, organizationJsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.domain),
   title: {
-    default: "NBABite — NBA Scores, Schedule, Teams, Stars & Where to Watch",
+    default: "NBABite — NBA Streams, Scores, Schedule, Teams, Stars & Where to Watch",
     template: "%s | NBABite",
   },
   description: SITE.description,
   applicationName: "NBABite",
   keywords: [
     "NBA",
+    "NBA stream",
+    "NBA streams",
     "NBA schedule",
     "NBA scores",
     "NBA teams",
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "NBABite — NBA Scores, Schedule, Teams, Stars & Where to Watch",
+    title: "NBABite — NBA Streams, Scores, Schedule, Teams, Stars & Where to Watch",
     description: SITE.description,
     url: SITE.domain,
     locale: "en_US",
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "NBABite — NBA Scores, Schedule, Teams, Stars & Where to Watch",
+    title: "NBABite — NBA Streams, Scores, Schedule, Teams, Stars & Where to Watch",
     description: SITE.description,
   },
   robots: {
