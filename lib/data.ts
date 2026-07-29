@@ -62,16 +62,16 @@ export const PLAYERS: Player[] = [
 ];
 
 export const GAMES: Game[] = [
-  { id: "g1", homeTeamSlug: "lakers", awayTeamSlug: "celtics", date: "2026-01-23T00:30:00Z", status: "scheduled", arena: "Crypto.com Arena", broadcast: "ABC", note: "Marquee matchup of two historic franchises." },
-  { id: "g2", homeTeamSlug: "warriors", awayTeamSlug: "thunder", date: "2026-01-24T01:00:00Z", status: "scheduled", arena: "Chase Center", broadcast: "ESPN", note: "MVP-caliber guards collide out West." },
-  { id: "g3", homeTeamSlug: "spurs", awayTeamSlug: "mavericks", date: "2026-01-25T00:30:00Z", status: "scheduled", arena: "Frost Bank Center", broadcast: "NBA TV", note: "Wembanyama faces Luka and Dallas." },
-  { id: "g4", homeTeamSlug: "bucks", awayTeamSlug: "76ers", date: "2026-01-25T01:00:00Z", status: "scheduled", arena: "Fiserv Forum", broadcast: "TNT", note: "Embiid vs Giannis in the frontcourt." },
-  { id: "g5", homeTeamSlug: "nuggets", awayTeamSlug: "timberwolves", date: "2026-01-26T02:00:00Z", status: "scheduled", arena: "Ball Arena", broadcast: "ESPN", note: "Jokic hosts Anthony Edwards and Minnesota." },
-  { id: "g6", homeTeamSlug: "knicks", awayTeamSlug: "heat", date: "2026-01-27T00:30:00Z", status: "scheduled", arena: "Madison Square Garden", broadcast: "TNT", note: "Atlantic vs Southeast rivalry renews." },
-  { id: "g7", homeTeamSlug: "suns", awayTeamSlug: "clippers", date: "2026-01-28T03:00:00Z", status: "scheduled", arena: "Footprint Center", broadcast: "NBA TV", note: "Durant and Booker host the Clippers." },
-  { id: "g8", homeTeamSlug: "cavaliers", awayTeamSlug: "magic", date: "2026-01-29T00:00:00Z", status: "scheduled", arena: "Rocket Mortgage FieldHouse", broadcast: "League Pass", note: "Mitchell vs Banchero, two rising stars." },
-  { id: "g9", homeTeamSlug: "raptors", awayTeamSlug: "nets", date: "2026-01-30T00:30:00Z", status: "scheduled", arena: "Scotiabank Arena", broadcast: "League Pass", note: "Cross-border Atlantic Division clash." },
-  { id: "g10", homeTeamSlug: "thunder", awayTeamSlug: "nuggets", date: "2026-01-31T01:00:00Z", status: "scheduled", arena: "Paycom Center", broadcast: "ABC", note: "SGA and OKC host the defending-minded Nuggets." },
+  { id: "g1", homeTeamSlug: "lakers", awayTeamSlug: "celtics", date: "2026-10-21T00:30:00Z", status: "scheduled", arena: "Crypto.com Arena", broadcast: "ABC", note: "2026-27 opening night: two historic franchises tip off the season." },
+  { id: "g2", homeTeamSlug: "warriors", awayTeamSlug: "thunder", date: "2026-10-22T01:00:00Z", status: "scheduled", arena: "Chase Center", broadcast: "ESPN", note: "MVP-caliber guards collide out West." },
+  { id: "g3", homeTeamSlug: "spurs", awayTeamSlug: "mavericks", date: "2026-10-23T00:30:00Z", status: "scheduled", arena: "Frost Bank Center", broadcast: "NBA TV", note: "Wembanyama faces Luka and Dallas." },
+  { id: "g4", homeTeamSlug: "bucks", awayTeamSlug: "76ers", date: "2026-10-24T01:00:00Z", status: "scheduled", arena: "Fiserv Forum", broadcast: "TNT", note: "Embiid vs Giannis in the frontcourt." },
+  { id: "g5", homeTeamSlug: "nuggets", awayTeamSlug: "timberwolves", date: "2026-10-25T02:00:00Z", status: "scheduled", arena: "Ball Arena", broadcast: "ESPN", note: "Jokic hosts Anthony Edwards and Minnesota." },
+  { id: "g6", homeTeamSlug: "knicks", awayTeamSlug: "heat", date: "2026-10-26T00:30:00Z", status: "scheduled", arena: "Madison Square Garden", broadcast: "TNT", note: "Atlantic vs Southeast rivalry renews." },
+  { id: "g7", homeTeamSlug: "suns", awayTeamSlug: "clippers", date: "2026-10-27T03:00:00Z", status: "scheduled", arena: "Footprint Center", broadcast: "NBA TV", note: "Durant and Booker host the Clippers." },
+  { id: "g8", homeTeamSlug: "cavaliers", awayTeamSlug: "magic", date: "2026-10-28T00:00:00Z", status: "scheduled", arena: "Rocket Mortgage FieldHouse", broadcast: "League Pass", note: "Mitchell vs Banchero, two rising stars." },
+  { id: "g9", homeTeamSlug: "raptors", awayTeamSlug: "nets", date: "2026-10-29T00:30:00Z", status: "scheduled", arena: "Scotiabank Arena", broadcast: "League Pass", note: "Cross-border Atlantic Division clash." },
+  { id: "g10", homeTeamSlug: "thunder", awayTeamSlug: "nuggets", date: "2026-10-30T01:00:00Z", status: "scheduled", arena: "Paycom Center", broadcast: "ABC", note: "SGA and OKC host the defending-minded Nuggets." },
 ];
 
 export const ARTICLES: Article[] = [

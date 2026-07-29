@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "NBA Schedule & Upcoming Games",
   description:
-    "The latest NBA schedule: upcoming matchups, tip-off times, arenas and where each game is broadcast legally. Updated for the current season.",
+    "The latest NBA schedule: upcoming 2026-27 matchups, tip-off times, arenas and where each game is broadcast legally.",
   alternates: { canonical: "/schedule" },
   openGraph: {
     title: "NBA Schedule & Upcoming Games | NBABite",
