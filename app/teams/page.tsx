@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export const metadata: Metadata = {
   title: "All 30 NBA Teams",
   description:
-    "Every NBA franchise at a glance: the Boston Celtics, Los Angeles Lakers, Golden State Warriors, San Antonio Spurs and all 30 teams across the Eastern and Western Conferences.",
+    "Every NBA franchise at a glance — all 30 teams across the Eastern and Western Conferences, from the Celtics and Lakers to the Spurs and Warriors.",
   alternates: { canonical: "/teams" },
   openGraph: {
     title: "All 30 NBA Teams | NBABite",

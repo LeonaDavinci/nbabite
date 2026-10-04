@@ -5,7 +5,7 @@ export const SITE = {
   domain: "https://www.nbabite.org",
   tagline: "Your daily home for NBA scores, schedules, teams, stars & where to watch",
   description:
-    "NBABite is an independent NBA fan hub — your home for NBA streams, schedules, scores, every team, and player stats for LeBron James, Stephen Curry, Victor Wembanyama and more, plus the legal ways to stream and watch NBA basketball.",
+    "NBABite is your home for NBA streams: 2026-27 schedule, live scores, all 30 teams, stars like LeBron and Curry, and legal ways to watch every game.",
 };
 
 export const TEAMS: Team[] = [

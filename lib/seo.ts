@@ -8,6 +8,19 @@ export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
+/**
+ * Trim a meta description to Bing/Google's recommended ~160-char limit,
+ * collapsing whitespace and cutting on a word boundary.
+ */
+export function metaDescription(text: string, max = 160): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 3);
+  const lastSpace = cut.lastIndexOf(" ");
+  const body = lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut;
+  return body.replace(/[,.;:!?\-–—]+$/, "") + "...";
+}
+
 /** Build a Next.js Metadata object for a generic page. */
 export function pageMetadata(opts: {
   title: string;

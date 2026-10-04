@@ -9,6 +9,8 @@ import { TeamLogo } from "@/components/TeamLogo";
 
 export const metadata: Metadata = {
   title: "NBABite - watch nba game every | NBA Streams",
+  description:
+    "NBABite is your home for NBA streams: 2026-27 schedule, live scores, all 30 teams, stars like LeBron and Curry, and legal ways to watch every game.",
 };
 
 export default function HomePage() {

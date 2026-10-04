@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "NBA Schedule 2026-27 — Opening Week Games & Tip-Off Times",
   description:
-    "The full 2026-27 NBA schedule for opening week: every matchup from Oct 20 onwards with dates, tip-off times, arenas and where each game airs legally (ESPN, NBC/Peacock, Prime Video, NBA League Pass).",
+    "The 2026-27 NBA schedule: every opening-week matchup from Oct 20 with tip-off times, arenas and where to watch — ESPN, NBC/Peacock, Prime Video.",
   alternates: { canonical: "/schedule" },
   openGraph: {
     title: "NBA Schedule 2026-27 — Opening Week Games | NBABite",

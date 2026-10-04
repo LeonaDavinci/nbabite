@@ -5,7 +5,7 @@ import { TEAMS, getTeam, getPlayersByTeam } from "@/lib/data";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PlayerCard } from "@/components/PlayerCard";
 import { JsonLd } from "@/components/JsonLd";
-import { teamJsonLd, pageMetadata } from "@/lib/seo";
+import { teamJsonLd, pageMetadata, metaDescription } from "@/lib/seo";
 
 export function generateStaticParams() {
   return TEAMS.map((t) => ({ slug: t.slug }));
@@ -16,7 +16,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!team) return { title: "Team not found" };
   return pageMetadata({
     title: `${team.name} — Schedule, Roster & History`,
-    description: `Everything about the ${team.name}: founded ${team.founded}, home at ${team.arena}, ${team.championships} championship(s), and current roster. ${team.description}`,
+    description: metaDescription(
+      `Everything about the ${team.name}: founded ${team.founded}, home at ${team.arena}, ${team.championships} championship(s), and current roster. ${team.description}`,
+    ),
     path: `/teams/${team.slug}`,
   }) as Metadata;
 }

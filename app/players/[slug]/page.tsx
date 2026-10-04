@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PLAYERS, getPlayer, getTeam } from "@/lib/data";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
-import { playerJsonLd, pageMetadata } from "@/lib/seo";
+import { playerJsonLd, pageMetadata, metaDescription } from "@/lib/seo";
 import { formatDate } from "@/lib/format";
 import { TeamLogo } from "@/components/TeamLogo";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
@@ -19,7 +19,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const team = getTeam(player.teamSlug);
   return pageMetadata({
     title: `${player.name} — Stats, Bio & Highlights`,
-    description: `${player.name} of the ${team?.name}: ${player.position}, #${player.jersey}. Career averages ${player.ppg} PPG, ${player.rpg} RPG, ${player.apg} APG. ${player.bio}`,
+    description: metaDescription(
+      `${player.name} of the ${team?.name}: ${player.position}, #${player.jersey}. Career averages ${player.ppg} PPG, ${player.rpg} RPG, ${player.apg} APG. ${player.bio}`,
+    ),
     path: `/players/${player.slug}`,
   }) as Metadata;
 }
