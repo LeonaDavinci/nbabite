@@ -33,9 +33,9 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
 
   const dateShort = formatShortDateIn(game.date, ET);
   const tip = formatTimeIn(game.date, ET);
-  const title = `${away.shortName} vs ${home.shortName} — ${dateShort}`;
+  const title = `${away.shortName} vs ${home.shortName} - ${dateShort}, livestream`;
   const description = metaDescription(
-    `${away.name} at ${home.name} on ${dateShort}, ${tip} ET at ${game.arena}. Preview, key players, records and where to watch (${game.broadcast}).`,
+    `${away.name} vs ${home.name} livestream on ${dateShort}, ${tip} ET at ${game.arena}. Preview, key players, records and where to watch (${game.broadcast}).`,
   );
   const url = absoluteUrl(`/games/${game.id}`);
   return {
