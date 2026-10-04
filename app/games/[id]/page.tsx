@@ -15,6 +15,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { TeamLogo } from "@/components/TeamLogo";
 import { PlayerCard } from "@/components/PlayerCard";
 import { GameCard } from "@/components/GameCard";
+import { BroadcasterCards } from "@/components/BroadcasterCards";
 import { gameJsonLd, breadcrumbJsonLd, metaDescription, absoluteUrl } from "@/lib/seo";
 import { formatTimeIn, formatDateIn, formatShortDateIn, formatTime } from "@/lib/format";
 
@@ -283,9 +284,31 @@ export default function GamePage({ params }: { params: { id: string } }) {
           <WatchBox title={`${home.shortName} local TV`} items={game.homeTv ?? []} fallback="Local RSN / League Pass" />
           <WatchBox title={`${away.shortName} local TV`} items={game.awayTv ?? []} fallback="Local RSN / League Pass" />
         </div>
-        <Link href="/watch" className="mt-5 inline-block rounded-lg bg-nba-blue px-5 py-3 font-bold text-white transition hover:bg-nba-red">
-          Complete legal streaming guide
-        </Link>
+
+        <h3 className="mt-8 border-b border-slate-200 pb-2 text-xl font-black text-slate-900">
+          National broadcasters
+        </h3>
+        <p className="mt-2 text-sm text-slate-600">
+          Official networks carrying NBA games this season — click through to watch on the broadcaster's own
+          site or app.
+        </p>
+        <div className="mt-4">
+          <BroadcasterCards />
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a
+            href="https://www.nba.com/leaguepass"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-nba-red px-5 py-3 font-bold text-white transition hover:bg-nba-blue"
+          >
+            Get NBA League Pass →
+          </a>
+          <Link href="/watch" className="rounded-lg bg-nba-blue px-5 py-3 font-bold text-white transition hover:bg-nba-red">
+            Complete legal streaming guide
+          </Link>
+        </div>
       </section>
 
       {/* SAME-DAY GAMES */}

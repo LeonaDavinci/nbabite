@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { BroadcasterCards } from "@/components/BroadcasterCards";
+import { LIVE_TV } from "@/lib/broadcasters";
 
 export const metadata: Metadata = {
   title: "Where to Watch the NBA Legally",
@@ -14,22 +16,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-const BROADCASTERS = [
-  { name: "ABC / ESPN", note: "Marquee national games, primetime and the NBA Finals on ABC.", tag: "National TV" },
-  { name: "NBC", note: "Returned to NBA coverage with a new Sunday night franchise package.", tag: "National TV" },
-  { name: "TNT", note: "Tuesday and Thursday night games plus Inside the NBA.", tag: "National TV" },
-  { name: "Amazon Prime Video", note: "New national streaming carrier for select games and playoffs.", tag: "Streaming" },
-  { name: "NBA TV", note: "The league's 24/7 channel with live games and analysis.", tag: "League" },
-];
-
-const LIVE_TV = [
-  { name: "NBA League Pass", note: "The league's official out-of-market streaming service for every game not subject to blackout.", id: "league-pass" },
-  { name: "YouTube TV", note: "Live TV bundle carrying ABC, ESPN, TNT and more." },
-  { name: "Hulu + Live TV", note: "Live TV bundle with Disney/ESPN networks included." },
-  { name: "Sling TV", note: "Flexible, lower-cost live TV with sports add-ons." },
-  { name: "FuboTV", note: "Sports-forward live TV bundle with ABC, ESPN and regional options." },
-];
 
 export default function WatchPage() {
   return (
@@ -51,29 +37,38 @@ export default function WatchPage() {
           all out-of-market games on demand and live, with multi-game viewing and condensed replays. Local
           blackouts may apply for in-market games.
         </p>
+        <a
+          href="https://www.nba.com/leaguepass"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-block rounded-lg bg-nba-red px-5 py-3 font-bold text-white transition hover:bg-nba-blue"
+        >
+          Get NBA League Pass →
+        </a>
 
         {/* National broadcasters */}
         <h2 id="broadcasters" className="mt-10 scroll-mt-24 text-2xl font-black text-nba-blue">
           National Broadcasters
         </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {BROADCASTERS.map((b) => (
-            <div key={b.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-              <span className="rounded-full bg-nba-red/10 px-2 py-0.5 text-xs font-semibold text-nba-red">{b.tag}</span>
-              <h3 className="mt-2 font-bold text-slate-900">{b.name}</h3>
-              <p className="mt-1 text-sm text-slate-600">{b.note}</p>
-            </div>
-          ))}
+        <div className="mt-4">
+          <BroadcasterCards />
         </div>
 
         {/* Live TV bundles */}
         <h2 className="mt-10 text-2xl font-black text-nba-blue">Live TV Streaming Bundles</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {LIVE_TV.map((s) => (
-            <div key={s.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-              <h3 className="font-bold text-slate-900">{s.name}</h3>
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-xl border border-slate-200 bg-white p-4 shadow-card transition hover:border-nba-blue hover:shadow-lg"
+            >
+              <h3 className="font-bold text-slate-900 group-hover:text-nba-blue">{s.name}</h3>
               <p className="mt-1 text-sm text-slate-600">{s.note}</p>
-            </div>
+              <span className="mt-2 inline-block text-sm font-semibold text-nba-blue">Go to {s.name} →</span>
+            </a>
           ))}
         </div>
 
