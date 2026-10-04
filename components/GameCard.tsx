@@ -10,10 +10,13 @@ export function GameCard({ game }: { game: Game }) {
   if (!home || !away) return null;
   return (
     <div className="flex flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-      <div className="flex items-center justify-between text-xs font-semibold text-slate-500">
+      <Link
+        href={`/games/${game.id}`}
+        className="flex items-center justify-between text-xs font-semibold text-slate-500 hover:text-nba-blue"
+      >
         <span>{formatDateTime(game.date)}</span>
         <span className="rounded-full bg-nba-blue/10 px-2 py-0.5 text-nba-blue">vs</span>
-      </div>
+      </Link>
       <div className="mt-3 flex items-center justify-between">
         <Link href={`/teams/${away.slug}`} className="flex items-center gap-2 hover:text-nba-blue">
           <TeamLogo slug={away.slug} size={32} className="shrink-0" />
@@ -29,8 +32,8 @@ export function GameCard({ game }: { game: Game }) {
       </div>
       <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3 text-xs">
         <span className="text-slate-500">📺 {game.broadcast}</span>
-        <Link href="/watch" className="font-semibold text-nba-red hover:underline">
-          How to watch →
+        <Link href={`/games/${game.id}`} className="font-semibold text-nba-red hover:underline">
+          Game preview →
         </Link>
       </div>
     </div>

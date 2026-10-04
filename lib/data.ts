@@ -61,61 +61,10 @@ export const PLAYERS: Player[] = [
   { id: "banchero", slug: "paolo-banchero", name: "Paolo Banchero", firstName: "Paolo", lastName: "Banchero", teamSlug: "magic", position: "Forward", jersey: 5, height: "6'10\"", weight: "250 lb", born: "2002-11-12", birthplace: "Seattle, Washington", draftYear: 2022, ppg: 22.6, rpg: 6.9, apg: 5.4, isStar: true, bio: "Paolo Banchero is the No. 1 pick and offensive hub of the Orlando Magic, a versatile forward who creates mismatches with size and skill." },
 ];
 
-// 2026-27 regular season — opening weeks, sourced from NBA.com's official schedule.
-// Times are stored in UTC (US Eastern tip-off times converted; EDT = UTC-4 in late October).
-export const GAMES: Game[] = [
-  // ----- Opening Night · Tue, Oct 20, 2026 -----
-  { id: "g1", homeTeamSlug: "pistons", awayTeamSlug: "celtics", date: "2026-10-20T20:00:00Z", status: "scheduled", arena: "Little Caesars Arena", broadcast: "Peacock / NBC", note: "2026-27 opening night: Celtics open the season in Detroit." },
-  { id: "g2", homeTeamSlug: "knicks", awayTeamSlug: "76ers", date: "2026-10-21T00:00:00Z", status: "scheduled", arena: "Madison Square Garden", broadcast: "Peacock / NBC", note: "Marquee opening-night showdown at the Garden." },
-
-  // ----- Wed, Oct 21, 2026 -----
-  { id: "g3", homeTeamSlug: "magic", awayTeamSlug: "hawks", date: "2026-10-22T00:00:00Z", status: "scheduled", arena: "Kia Center", broadcast: "NBA League Pass", note: "Southeast Division rivals tip off in Orlando." },
-  { id: "g4", homeTeamSlug: "wizards", awayTeamSlug: "bucks", date: "2026-10-22T00:00:00Z", status: "scheduled", arena: "Capital One Arena", broadcast: "NBA League Pass", note: "Giannis and Milwaukee visit the nation's capital." },
-  { id: "g5", homeTeamSlug: "nets", awayTeamSlug: "hornets", date: "2026-10-22T00:30:00Z", status: "scheduled", arena: "Barclays Center", broadcast: "NBA League Pass", note: "Brooklyn opens at home under the bright lights." },
-  { id: "g6", homeTeamSlug: "raptors", awayTeamSlug: "bulls", date: "2026-10-22T00:30:00Z", status: "scheduled", arena: "Scotiabank Arena", broadcast: "NBA League Pass", note: "Chicago crosses the border to face Toronto." },
-  { id: "g7", homeTeamSlug: "grizzlies", awayTeamSlug: "jazz", date: "2026-10-22T01:00:00Z", status: "scheduled", arena: "FedExForum", broadcast: "NBA League Pass", note: "Ja Morant and Memphis host Utah." },
-  { id: "g8", homeTeamSlug: "pelicans", awayTeamSlug: "pacers", date: "2026-10-22T01:00:00Z", status: "scheduled", arena: "Smoothie King Center", broadcast: "NBA League Pass", note: "Indiana's up-tempo attack visits New Orleans." },
-
-  // ----- Thu, Oct 22, 2026 (ESPN doubleheader) -----
-  { id: "g9", homeTeamSlug: "76ers", awayTeamSlug: "cavaliers", date: "2026-10-23T00:00:00Z", status: "scheduled", arena: "Xfinity Mobile Arena", broadcast: "ESPN", note: "A national-TV Atlantic clash: Embiid vs Mitchell." },
-  { id: "g10", homeTeamSlug: "thunder", awayTeamSlug: "nuggets", date: "2026-10-23T02:30:00Z", status: "scheduled", arena: "Paycom Center", broadcast: "ESPN", note: "SGA and OKC host Jokic and Denver in a Finals-level test." },
-
-  // ----- Fri, Oct 23, 2026 -----
-  { id: "g11", homeTeamSlug: "celtics", awayTeamSlug: "knicks", date: "2026-10-24T00:00:00Z", status: "scheduled", arena: "TD Garden", broadcast: "Prime Video", note: "Boston vs New York — a marquee Atlantic rivalry on Prime Video." },
-  { id: "g12", homeTeamSlug: "hornets", awayTeamSlug: "hawks", date: "2026-10-24T00:00:00Z", status: "scheduled", arena: "Spectrum Center", broadcast: "NBA League Pass", note: "Southeast rivals meet in Charlotte." },
-  { id: "g13", homeTeamSlug: "magic", awayTeamSlug: "timberwolves", date: "2026-10-24T00:00:00Z", status: "scheduled", arena: "Kia Center", broadcast: "NBA League Pass", note: "Orlando's length meets Anthony Edwards and Minnesota." },
-
-  // ----- Sun, Oct 25, 2026 -----
-  { id: "g14", homeTeamSlug: "jazz", awayTeamSlug: "lakers", date: "2026-10-25T22:00:00Z", status: "scheduled", arena: "Delta Center", broadcast: "NBA League Pass", note: "The Lakers visit Salt Lake City." },
-  { id: "g15", homeTeamSlug: "nets", awayTeamSlug: "pacers", date: "2026-10-25T23:00:00Z", status: "scheduled", arena: "Barclays Center", broadcast: "NBA League Pass", note: "Indiana brings pace to Brooklyn." },
-  { id: "g16", homeTeamSlug: "thunder", awayTeamSlug: "clippers", date: "2026-10-26T00:00:00Z", status: "scheduled", arena: "Paycom Center", broadcast: "NBA League Pass", note: "LA's Intuit Dome crew heads to OKC." },
-  { id: "g17", homeTeamSlug: "76ers", awayTeamSlug: "pistons", date: "2026-10-26T00:30:00Z", status: "scheduled", arena: "Xfinity Mobile Arena", broadcast: "NBA League Pass", note: "Detroit tests Philadelphia at home." },
-  { id: "g18", homeTeamSlug: "kings", awayTeamSlug: "grizzlies", date: "2026-10-26T02:00:00Z", status: "scheduled", arena: "Golden 1 Center", broadcast: "NBA League Pass", note: "Memphis closes the weekend in Sacramento." },
-
-  // ----- Mon, Oct 26, 2026 -----
-  { id: "g19", homeTeamSlug: "cavaliers", awayTeamSlug: "timberwolves", date: "2026-10-27T00:00:00Z", status: "scheduled", arena: "Rocket Arena", broadcast: "NBA League Pass", note: "Two rising contenders square off in Cleveland." },
-  { id: "g20", homeTeamSlug: "celtics", awayTeamSlug: "bulls", date: "2026-10-27T00:30:00Z", status: "scheduled", arena: "TD Garden", broadcast: "NBA League Pass", note: "Chicago visits Boston." },
-  { id: "g21", homeTeamSlug: "heat", awayTeamSlug: "mavericks", date: "2026-10-27T00:30:00Z", status: "scheduled", arena: "Kaseya Center", broadcast: "NBA TV", note: "Luka and Dallas take on Miami's culture on NBA TV." },
-  { id: "g22", homeTeamSlug: "thunder", awayTeamSlug: "suns", date: "2026-10-27T01:00:00Z", status: "scheduled", arena: "Paycom Center", broadcast: "NBA League Pass", note: "Phoenix's perimeter firepower meets OKC's defense." },
-  { id: "g23", homeTeamSlug: "rockets", awayTeamSlug: "hawks", date: "2026-10-27T01:30:00Z", status: "scheduled", arena: "Toyota Center", broadcast: "NBA League Pass", note: "Atlanta closes out its Texas trip in Houston." },
-  { id: "g24", homeTeamSlug: "nuggets", awayTeamSlug: "warriors", date: "2026-10-27T03:00:00Z", status: "scheduled", arena: "Ball Arena", broadcast: "Peacock / NBC Sports", note: "Steph Curry vs Nikola Jokic on Peacock — a must-watch nightcap." },
-
-  // ----- Tue, Oct 27, 2026 -----
-  { id: "g25", homeTeamSlug: "celtics", awayTeamSlug: "nets", date: "2026-10-28T00:30:00Z", status: "scheduled", arena: "TD Garden", broadcast: "NBA League Pass", note: "Brooklyn's road trip continues in Boston." },
-  { id: "g26", homeTeamSlug: "knicks", awayTeamSlug: "pistons", date: "2026-10-28T01:00:00Z", status: "scheduled", arena: "Madison Square Garden", broadcast: "Peacock", note: "Detroit at the Garden on Peacock." },
-  { id: "g27", homeTeamSlug: "spurs", awayTeamSlug: "kings", date: "2026-10-28T01:00:00Z", status: "scheduled", arena: "Frost Bank Center", broadcast: "NBA League Pass", note: "Wembanyama and the Spurs host Sacramento." },
-
-  // ----- Wed, Oct 28, 2026 -----
-  { id: "g28", homeTeamSlug: "hawks", awayTeamSlug: "heat", date: "2026-10-29T00:00:00Z", status: "scheduled", arena: "State Farm Arena", broadcast: "NBA League Pass", note: "Miami heads to Atlanta." },
-  { id: "g29", homeTeamSlug: "pistons", awayTeamSlug: "hornets", date: "2026-10-29T00:00:00Z", status: "scheduled", arena: "Little Caesars Arena", broadcast: "NBA League Pass", note: "Charlotte visits Detroit." },
-  { id: "g30", homeTeamSlug: "pacers", awayTeamSlug: "76ers", date: "2026-10-29T00:00:00Z", status: "scheduled", arena: "Gainbridge Fieldhouse", broadcast: "ESPN", note: "Philadelphia at Indiana in an ESPN national game." },
-  { id: "g31", homeTeamSlug: "pelicans", awayTeamSlug: "nuggets", date: "2026-10-29T01:00:00Z", status: "scheduled", arena: "Smoothie King Center", broadcast: "NBA League Pass", note: "Denver's road swing lands in New Orleans." },
-  { id: "g32", homeTeamSlug: "jazz", awayTeamSlug: "spurs", date: "2026-10-29T02:00:00Z", status: "scheduled", arena: "Delta Center", broadcast: "NBA League Pass", note: "San Antonio at Utah." },
-  { id: "g33", homeTeamSlug: "mavericks", awayTeamSlug: "thunder", date: "2026-10-29T02:30:00Z", status: "scheduled", arena: "American Airlines Center", broadcast: "ESPN", note: "Luka vs SGA — star guards collide on ESPN." },
-
-  // ----- Thu, Oct 29, 2026 -----
-  { id: "g34", homeTeamSlug: "hawks", awayTeamSlug: "cavaliers", date: "2026-10-30T00:00:00Z", status: "scheduled", arena: "State Farm Arena", broadcast: "NBA TV", note: "Cleveland visits Atlanta on NBA TV." },
-];
+// 2026-27 regular-season games — auto-generated from the official NBA schedule.
+// See lib/games.generated.ts (regenerate with `node scripts/gen-games.cjs`).
+import { GAMES } from "./games.generated";
+export { GAMES };
 
 export const ARTICLES: Article[] = [
   {
@@ -238,6 +187,20 @@ export function getPlayersByTeam(teamSlug: string): Player[] {
 }
 export function starPlayers(): Player[] {
   return PLAYERS.filter((p) => p.isStar);
+}
+export function getGame(id: string): Game | undefined {
+  return GAMES.find((g) => g.id === id);
+}
+/** Games involving a team, sorted by tip-off. */
+export function getGamesByTeam(teamSlug: string): Game[] {
+  return GAMES.filter((g) => g.homeTeamSlug === teamSlug || g.awayTeamSlug === teamSlug).sort(
+    (a, b) => +new Date(a.date) - +new Date(b.date),
+  );
+}
+/** Other games on the same calendar day (UTC), excluding the given game. */
+export function getGamesOnSameDay(game: Game): Game[] {
+  const day = game.date.slice(0, 10);
+  return GAMES.filter((g) => g.date.slice(0, 10) === day && g.id !== game.id);
 }
 
 // Resolve a news/article tag to a Team when the tag refers to a franchise

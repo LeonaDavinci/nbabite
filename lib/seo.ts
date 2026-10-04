@@ -155,5 +155,20 @@ export function gameJsonLd(game: Game, home: Team, away: Team) {
       url: absoluteUrl(`/teams/${away.slug}`),
     },
     location: { "@type": "Place", name: game.arena },
+    ...(game.gameId ? { identifier: game.gameId } : {}),
+    url: absoluteUrl(`/games/${game.id}`),
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: absoluteUrl(it.path),
+    })),
   };
 }

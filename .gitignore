@@ -24,6 +24,9 @@ yarn-error.log*
 # scrape working dir (used only to fetch external assets)
 .scrape/
 
+# temp scrape caches (NBA schedule JSON etc.)
+.tmp-*
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

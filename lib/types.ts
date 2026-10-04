@@ -41,12 +41,30 @@ export interface Player {
 
 export interface Game {
   id: string;
+  /** Official NBA game id (e.g. "0022600001"), scraped from NBA.com. */
+  gameId?: string;
+  /** Official NBA game code (e.g. "20261020/BOSDET"). */
+  gameCode?: string;
   homeTeamSlug: string;
   awayTeamSlug: string;
+  /** Tip-off in UTC (ISO 8601). */
   date: string;
   status: "scheduled";
   arena: string;
+  arenaCity?: string;
+  arenaState?: string;
+  /** Primary broadcast string shown on cards. */
   broadcast: string;
+  nationalTv?: string[];
+  nationalOtt?: string[];
+  homeTv?: string[];
+  awayTv?: string[];
+  radio?: string[];
+  homeRecord?: string;
+  awayRecord?: string;
+  /** Competition label, e.g. "Emirates NBA Cup — East Group C". */
+  label?: string;
+  week?: string;
   note?: string;
 }
 

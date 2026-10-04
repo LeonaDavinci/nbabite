@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE, TEAMS, PLAYERS, ARTICLES } from "@/lib/data";
+import { SITE, TEAMS, PLAYERS, ARTICLES, GAMES } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.domain;
@@ -36,5 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...teamRoutes, ...playerRoutes, ...newsRoutes];
+  const gameRoutes = GAMES.map((g) => ({
+    url: `${base}/games/${g.id}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...teamRoutes, ...playerRoutes, ...newsRoutes, ...gameRoutes];
 }
