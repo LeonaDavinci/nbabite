@@ -27,8 +27,8 @@ export default function HomePage() {
             <span className="text-nba-red">nbabite</span> - your nba streams home website
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-600">
-            Schedules, scores, every team, the biggest stars — LeBron James, Stephen Curry, Victor Wembanyama —
-            and the legal ways to watch NBA basketball, all in one place.
+            The 2026-27 season tips off <strong>Oct 20</strong>. Get schedules, scores, every team, the biggest stars —
+            LeBron James, Stephen Curry, Victor Wembanyama — and the legal ways to watch NBA basketball, all in one place.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/schedule" className="rounded-lg bg-nba-red px-5 py-3 font-bold text-white shadow-card transition hover:bg-nba-blue">
@@ -75,7 +75,7 @@ export default function HomePage() {
 
       {/* UPCOMING GAMES */}
       <section className="mx-auto max-w-content px-4 py-12">
-        <SectionHeader title="Upcoming NBA Games" subtitle="Featured matchups from the current slate" href="/schedule" cta="Full schedule" />
+        <SectionHeader title="Upcoming NBA Games" subtitle="Opening week of the 2026-27 season — from Oct 20" href="/schedule" cta="Full schedule" />
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredGames.map((g) => (
             <GameCard key={g.id} game={g} />
