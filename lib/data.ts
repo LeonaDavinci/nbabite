@@ -1,4 +1,7 @@
 import { Team, Player, Game, Article } from "./types";
+import { dateKeyIn } from "./format";
+
+const ET_ZONE = "America/New_York";
 
 export const SITE = {
   name: "NBABite",
@@ -197,10 +200,41 @@ export function getGamesByTeam(teamSlug: string): Game[] {
     (a, b) => +new Date(a.date) - +new Date(b.date),
   );
 }
-/** Other games on the same calendar day (UTC), excluding the given game. */
+/** Other games on the same calendar day (Eastern) as the given game. */
 export function getGamesOnSameDay(game: Game): Game[] {
-  const day = game.date.slice(0, 10);
-  return GAMES.filter((g) => g.date.slice(0, 10) === day && g.id !== game.id);
+  const day = dateKeyIn(game.date, ET_ZONE);
+  return GAMES.filter((g) => dateKeyIn(g.date, ET_ZONE) === day && g.id !== game.id);
+}
+
+/** Grace window: a tip-off up to 4h in the past is still treated as "upcoming" until NBA marks it final. */
+const UPCOMING_GRACE_MS = 4 * 3600 * 1000;
+
+/** Live games and upcoming tip-offs, soonest first. Recomputed per render (pages use ISR). */
+export function getUpcomingGames(limit?: number): Game[] {
+  const cutoff = Date.now() - UPCOMING_GRACE_MS;
+  const list = GAMES.filter(
+    (g) => g.status === "live" || (g.status === "scheduled" && Date.parse(g.date) >= cutoff),
+  ).sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+  return typeof limit === "number" ? list.slice(0, limit) : list;
+}
+
+/** Most recent completed games, newest first. */
+export function getRecentResults(limit = 6): Game[] {
+  return GAMES.filter((g) => g.status === "final")
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    .slice(0, limit);
+}
+
+/** Games already completed, newest first (unlimited). */
+export function getFinishedGames(): Game[] {
+  return GAMES.filter((g) => g.status === "final").sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+}
+
+/** Winner of a finished game, or null for ties/unplayed games. */
+export function gameWinner(g: Game): "home" | "away" | null {
+  if (g.status !== "final" || g.homeScore == null || g.awayScore == null) return null;
+  if (g.homeScore === g.awayScore) return null;
+  return g.homeScore > g.awayScore ? "home" : "away";
 }
 
 // Resolve a news/article tag to a Team when the tag refers to a franchise

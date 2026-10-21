@@ -1,10 +1,16 @@
 // Generator: NBA official schedule JSON -> lib/games.generated.ts
-// Run:  node scripts/gen-games.cjs
+// Run:  node scripts/gen-games.cjs [--days-ahead=N]
+//
+// Sources (both official NBA CDN, browser UA required):
+//   - staticData/scheduleLeagueV2_1.json          -> full 2026-27 schedule + gameStatus/scores
+//   - liveData/scoreboard/todaysScoreboard_00.json -> live scores for games in progress
+//
+// The schedule file's score for an in-progress game lags (often 0-0), so live
+// entries are overlaid with the scoreboard feed.
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = "C:/Users/star/WorkBuddy/2026-07-26-01-41-20/nbabite";
-const CACHE = path.join(ROOT, ".tmp-schedule.json");
 const OUT = path.join(ROOT, "lib", "games.generated.ts");
 const H = {
   "User-Agent":
@@ -23,37 +29,53 @@ const TRICODE_TO_SLUG = {
   SAC: "kings", SAS: "spurs", TOR: "raptors", UTA: "jazz", WAS: "wizards",
 };
 
+// Season opener is fixed; the window always starts there so recent results stay on the site.
 const FROM = Date.parse("2026-10-20T00:00:00Z");
-const TO = Date.parse("2026-11-02T00:00:00Z"); // through Nov 1 (end of Week 2)
+const daysAheadArg = process.argv.find((a) => a.startsWith("--days-ahead="));
+const DAYS_AHEAD = daysAheadArg ? Number(daysAheadArg.split("=")[1]) : 41; // through Nov 30
+const TO = Date.now() + DAYS_AHEAD * 24 * 3600 * 1000;
 
 function uniq(arr) {
   return [...new Set(arr.filter(Boolean))];
 }
+const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
 
-async function load() {
-  if (fs.existsSync(CACHE)) return JSON.parse(fs.readFileSync(CACHE, "utf8"));
-  const r = await fetch("https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json", { headers: H });
-  const t = await r.text();
-  fs.writeFileSync(CACHE, t);
-  return JSON.parse(t);
+function statusOf(g) {
+  const n = Number(g.gameStatus);
+  if (n === 3) return "final";
+  if (n === 2) return "live";
+  return "scheduled";
+}
+
+async function getJson(url) {
+  const r = await fetch(url, { headers: H });
+  if (!r.ok) throw new Error(`${url} -> HTTP ${r.status}`);
+  return JSON.parse(await r.text());
 }
 
 (async () => {
-  const j = await load();
-  const all = [];
-  for (const d of j.leagueSchedule.gameDates) for (const g of d.games) all.push(g);
+  const sched = await getJson("https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json");
 
-  const picked = all
-    .filter((g) => String(g.gameId).startsWith("002"))
-    .filter((g) => {
-      const t = Date.parse(g.gameDateTimeUTC);
-      return t >= FROM && t < TO;
-    })
-    .sort((a, b) => Date.parse(a.gameDateTimeUTC) - Date.parse(b.gameDateTimeUTC));
+  // Live overlay (today's games only). Non-fatal if it fails.
+  let live = {};
+  try {
+    const sb = await getJson("https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json");
+    for (const g of sb.scoreboard?.games || []) live[String(g.gameId)] = g;
+    console.log("scoreboard games=" + Object.keys(live).length);
+  } catch (e) {
+    console.log("scoreboard unavailable (" + e.message + ") — live scores from schedule file only");
+  }
+
+  const all = [];
+  for (const d of sched.leagueSchedule.gameDates) for (const g of d.games) all.push(g);
 
   const games = [];
   const skipped = [];
-  for (const g of picked) {
+  for (const g of all) {
+    if (!String(g.gameId).startsWith("002")) continue; // regular season only (skip preseason/playoffs)
+    const t = Date.parse(g.gameDateTimeUTC);
+    if (t < FROM || t > TO) continue;
+
     const home = TRICODE_TO_SLUG[g.homeTeam.teamTricode];
     const away = TRICODE_TO_SLUG[g.awayTeam.teamTricode];
     if (!home || !away) { skipped.push(g.gameCode); continue; }
@@ -71,9 +93,27 @@ async function load() {
         ? nationalOtt.join(" / ")
         : "NBA League Pass";
 
+    const status = statusOf(g);
+    const sb = live[String(g.gameId)];
+
+    // Prefer the live scoreboard feed for in-progress games (schedule JSON lags at 0-0).
+    const useSb = sb && (status === "live" || status === "final");
+    const homeScore = useSb ? sb.homeTeam?.score ?? g.homeTeam.score : g.homeTeam.score;
+    const awayScore = useSb ? sb.awayTeam?.score ?? g.awayTeam.score : g.awayTeam.score;
+    const statusText =
+      status === "scheduled"
+        ? ""
+        : clean(useSb ? sb.gameStatusText : g.gameStatusText) || (status === "final" ? "Final" : "Live");
+
+    const leaders = (g.pointsLeaders || []).slice(0, 3).map((p) => ({
+      name: `${p.firstName} ${p.lastName}`.trim(),
+      teamTricode: p.teamTricode,
+      points: Number(p.points) || 0,
+    }));
+
     const dateOnly = g.gameDateTimeUTC.slice(0, 10);
-    const label = g.gameLabel ? String(g.gameLabel).trim() : "";
-    const sub = g.gameSubLabel ? String(g.gameSubLabel).trim() : "";
+    const label = clean(g.gameLabel);
+    const sub = clean(g.gameSubLabel);
 
     games.push({
       id: `${away}-at-${home}-${dateOnly}`,
@@ -82,7 +122,11 @@ async function load() {
       homeTeamSlug: home,
       awayTeamSlug: away,
       date: g.gameDateTimeUTC,
-      status: "scheduled",
+      status,
+      statusText,
+      homeScore: status === "scheduled" ? null : Number(homeScore) || 0,
+      awayScore: status === "scheduled" ? null : Number(awayScore) || 0,
+      pointsLeaders: leaders.length ? leaders : null,
       arena: g.arenaName,
       arenaCity: g.arenaCity || "",
       arenaState: g.arenaState || "",
@@ -95,9 +139,11 @@ async function load() {
       homeRecord: `${g.homeTeam.wins}-${g.homeTeam.losses}`,
       awayRecord: `${g.awayTeam.wins}-${g.awayTeam.losses}`,
       label: [label, sub].filter(Boolean).join(" — "),
-      week: g.weekName || "",
+      week: clean(g.weekName),
     });
   }
+
+  games.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
   const stamp = new Date().toISOString();
   const jstr = JSON.stringify;
@@ -110,7 +156,13 @@ async function load() {
         `    homeTeamSlug: ${jstr(g.homeTeamSlug)},`,
         `    awayTeamSlug: ${jstr(g.awayTeamSlug)},`,
         `    date: ${jstr(g.date)},`,
-        `    status: "scheduled",`,
+        `    status: ${jstr(g.status)},`,
+      ];
+      if (g.statusText) lines.push(`    statusText: ${jstr(g.statusText)},`);
+      if (g.homeScore !== null) lines.push(`    homeScore: ${g.homeScore},`);
+      if (g.awayScore !== null) lines.push(`    awayScore: ${g.awayScore},`);
+      if (g.pointsLeaders) lines.push(`    pointsLeaders: ${jstr(g.pointsLeaders)},`);
+      lines.push(
         `    arena: ${jstr(g.arena)},`,
         `    arenaCity: ${jstr(g.arenaCity)},`,
         `    arenaState: ${jstr(g.arenaState)},`,
@@ -124,16 +176,18 @@ async function load() {
         `    awayRecord: ${jstr(g.awayRecord)},`,
         `    label: ${jstr(g.label)},`,
         `    week: ${jstr(g.week)},`,
-      ];
+      );
       return "  {\n" + lines.join("\n") + "\n  },";
     })
     .join("\n");
 
+  const first = games[0]?.date?.slice(0, 10) || "?";
+  const last = games[games.length - 1]?.date?.slice(0, 10) || "?";
   const out = `// AUTO-GENERATED — do not edit by hand.
-// Source: NBA.com official schedule (cdn.nba.com scheduleLeagueV2, season 2026-27).
-// Regenerate with: node scripts/gen-games.cjs
+// Source: NBA.com official schedule (cdn.nba.com scheduleLeagueV2) + live scoreboard overlay.
+// Regenerate with: node scripts/gen-games.cjs [--days-ahead=N]
 // Generated: ${stamp}
-// Range: 2026-10-20 .. 2026-11-01 (Weeks 1-2 of the 2026-27 regular season)
+// Range: ${first} .. ${last} (${games.length} regular-season games; ${games.filter((g) => g.status === "final").length} final, ${games.filter((g) => g.status === "live").length} live)
 import { Game } from "./types";
 
 export const GAMES: Game[] = [
@@ -142,6 +196,12 @@ ${body}
 `;
   fs.writeFileSync(OUT, out);
   console.log("wrote " + OUT);
-  console.log("games=" + games.length + " skipped(no slug)=" + skipped.length + " " + JSON.stringify(skipped.slice(0, 10)));
+  console.log(
+    "games=" + games.length +
+    " final=" + games.filter((g) => g.status === "final").length +
+    " live=" + games.filter((g) => g.status === "live").length +
+    " skipped(no slug)=" + skipped.length +
+    " range=" + first + ".." + last,
+  );
   console.log("national-tv games=" + games.filter((g) => g.nationalTv.length).length);
 })();

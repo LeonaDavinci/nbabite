@@ -9,6 +9,7 @@ import {
   getPlayersByTeam,
   getGamesOnSameDay,
   getGamesByTeam,
+  gameWinner,
 } from "@/lib/data";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
@@ -20,6 +21,9 @@ import { gameJsonLd, breadcrumbJsonLd, metaDescription, absoluteUrl } from "@/li
 import { formatTimeIn, formatDateIn, formatShortDateIn, formatTime } from "@/lib/format";
 
 const ET = "America/New_York";
+
+// Refresh scores / status every 5 minutes (ISR).
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return GAMES.map((g) => ({ id: g.id }));
@@ -35,8 +39,11 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   const dateShort = formatShortDateIn(game.date, ET);
   const tip = formatTimeIn(game.date, ET);
   const title = `${away.shortName} vs ${home.shortName} - ${dateShort}, livestream`;
+  const played = game.status === "final" && game.homeScore != null && game.awayScore != null;
   const description = metaDescription(
-    `${away.name} vs ${home.name} livestream on ${dateShort}, ${tip} ET at ${game.arena}. Preview, key players, records and where to watch (${game.broadcast}).`,
+    played
+      ? `${away.shortName} ${game.awayScore} - ${home.shortName} ${game.homeScore} final score on ${dateShort}: box score, top scorers and how to stream the next game.`
+      : `${away.name} vs ${home.name} livestream on ${dateShort}, ${tip} ET at ${game.arena}. Preview, key players, records and where to watch (${game.broadcast}).`,
   );
   const url = absoluteUrl(`/games/${game.id}`);
   return {
@@ -67,6 +74,18 @@ export default function GamePage({ params }: { params: { id: string } }) {
   const sameDivision = home.division === away.division;
   const sameConference = home.conference === away.conference;
 
+  const isFinal = game.status === "final";
+  const isLive = game.status === "live";
+  const played = isFinal || isLive;
+  const hasScore = game.homeScore != null && game.awayScore != null;
+  const winner = gameWinner(game);
+  const winnerTeam = winner === "home" ? home : winner === "away" ? away : null;
+  const winnerScore = winner === "home" ? game.homeScore : game.awayScore;
+  const loserScore = winner === "home" ? game.awayScore : game.homeScore;
+  const venue = `${game.arena}${game.arenaCity ? `, ${game.arenaCity}` : ""}${
+    game.arenaState ? `, ${game.arenaState}` : ""
+  }`;
+
   return (
     <>
       <JsonLd data={gameJsonLd(game, home, away)} />
@@ -93,22 +112,63 @@ export default function GamePage({ params }: { params: { id: string } }) {
             {game.label}
           </span>
         )}
-        <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-nba-red">
-          {game.week ? `${game.week} · ` : ""}
-          {dateLong}
-        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm font-semibold uppercase tracking-widest text-nba-red">
+          <span>
+            {game.week ? `${game.week} · ` : ""}
+            {dateLong}
+          </span>
+          {isLive && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-nba-red px-2 py-0.5 text-xs font-black tracking-wider text-white">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+              {game.statusText || "Live"}
+            </span>
+          )}
+          {isFinal && (
+            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-black tracking-wider text-white">
+              {game.statusText || "Final"}
+            </span>
+          )}
+        </div>
         <h1 className="mt-1 text-3xl font-black leading-tight text-slate-900 md:text-4xl">
           {away.name} vs {home.name}
         </h1>
         <p className="mt-2 text-slate-600">
-          Tip-off <strong>{tipEt} ET</strong> ({tipUtc}) at {game.arena}, {game.arenaCity}
-          {game.arenaState ? `, ${game.arenaState}` : ""}.
+          Tip-off <strong>{tipEt} ET</strong> ({tipUtc}) at {venue}.
         </p>
+        {isFinal && winnerTeam && winnerScore != null && loserScore != null && (
+          <p className="mt-1 text-lg font-black text-slate-900">
+            {winnerTeam.name} win {winnerScore}-{loserScore}
+            <span className="ml-2 text-sm font-semibold uppercase tracking-wide text-slate-400">
+              {game.statusText || "Final"}
+            </span>
+          </p>
+        )}
 
         <div className="mt-6 grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-          <TeamSide team={away} label="Away" record={game.awayRecord} />
-          <div className="text-center text-sm font-black uppercase tracking-widest text-slate-400">at</div>
-          <TeamSide team={home} label="Home" record={game.homeRecord} align="right" />
+          <TeamSide
+            team={away}
+            label="Away"
+            record={game.awayRecord}
+            dimmed={winner === "home"}
+          />
+          <div className="text-center">
+            {hasScore && played ? (
+              <div className="text-2xl font-black tabular-nums text-slate-900">
+                {game.awayScore}
+                <span className="mx-1 text-slate-300">-</span>
+                {game.homeScore}
+              </div>
+            ) : (
+              <div className="text-sm font-black uppercase tracking-widest text-slate-400">at</div>
+            )}
+          </div>
+          <TeamSide
+            team={home}
+            label="Home"
+            record={game.homeRecord}
+            align="right"
+            dimmed={winner === "away"}
+          />
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3">
@@ -129,12 +189,24 @@ export default function GamePage({ params }: { params: { id: string } }) {
           <Info label="Tip-off">
             {tipEt} ET · {tipUtc}
           </Info>
-          <Info label="Arena">
-            {game.arena}
-            {game.arenaCity ? `, ${game.arenaCity}` : ""}
-            {game.arenaState ? `, ${game.arenaState}` : ""}
+          <Info label="Status">
+            {isLive
+              ? `Live — ${game.statusText || "in progress"}`
+              : isFinal
+                ? `${game.statusText || "Final"}${
+                    hasScore
+                      ? ` · ${away.shortName} ${game.awayScore} – ${home.shortName} ${game.homeScore}`
+                      : ""
+                  }`
+                : "Scheduled"}
           </Info>
+          <Info label="Arena">{venue}</Info>
           <Info label="TV broadcast">{game.broadcast}</Info>
+          {game.pointsLeaders && game.pointsLeaders.length > 0 && (
+            <Info label="Top scorers">
+              {game.pointsLeaders.map((p) => `${p.name} (${p.teamTricode}) ${p.points}`).join(" · ")}
+            </Info>
+          )}
           {game.radio && game.radio.length > 0 && <Info label="Radio">{game.radio.join(", ")}</Info>}
           <Info label="Competition">
             {[game.label, game.week].filter(Boolean).join(" · ") || "2026-27 NBA regular season"}
@@ -154,14 +226,34 @@ export default function GamePage({ params }: { params: { id: string } }) {
       {/* PREVIEW */}
       <section className="mx-auto max-w-content px-4 py-6">
         <h2 className="border-b border-slate-200 pb-2 text-2xl font-black text-slate-900">
-          {away.name} vs {home.name} preview
+          {isFinal
+            ? `${away.name} vs ${home.name} result`
+            : isLive
+              ? `${away.name} vs ${home.name} — live`
+              : `${away.name} vs ${home.name} preview`}
         </h2>
         <div className="mt-4 space-y-3 text-slate-600">
+          {played && hasScore && (
+            <p className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-900">
+              <span className="text-lg font-black tabular-nums">
+                {away.shortName} {game.awayScore} – {home.shortName} {game.homeScore}
+              </span>
+              <span className="ml-2 text-sm font-semibold uppercase tracking-wide text-slate-500">
+                {game.statusText || (isFinal ? "Final" : "Live")}
+              </span>
+              {winnerTeam && (
+                <span className="mt-1 block text-sm text-slate-600">
+                  {winnerTeam.name} {isFinal ? "win" : "lead"} {Math.abs((winnerScore ?? 0) - (loserScore ?? 0))}-
+                  point margin over {winner === "home" ? away.name : home.name}.
+                </span>
+              )}
+            </p>
+          )}
           <p>
-            The <strong>{away.name}</strong> ({game.awayRecord}) visit the <strong>{home.name}</strong> (
-            {game.homeRecord}) at <strong>{game.arena}</strong> in {game.arenaCity || home.city} on {dateLong},
-            tipping off at {tipEt} ET. It&apos;s a {game.week ? `${game.week} ` : ""}game of the 2026-27 NBA
-            regular season
+            The <strong>{away.name}</strong> ({game.awayRecord}) {played ? "visited" : "visit"} the{" "}
+            <strong>{home.name}</strong> ({game.homeRecord}) at <strong>{game.arena}</strong> in{" "}
+            {game.arenaCity || home.city} on {dateLong}, tipping off at {tipEt} ET. It&apos;s a{" "}
+            {game.week ? `${game.week} ` : ""}game of the 2026-27 NBA regular season
             {game.label ? `, part of the ${game.label}` : ""}.
           </p>
           <p>
@@ -360,11 +452,13 @@ function TeamSide({
   label,
   record,
   align = "left",
+  dimmed = false,
 }: {
   team: { slug: string; name: string; shortName: string; city: string };
   label: string;
   record?: string;
   align?: "left" | "right";
+  dimmed?: boolean;
 }) {
   return (
     <Link
@@ -374,7 +468,9 @@ function TeamSide({
       <TeamLogo slug={team.slug} size={56} className="shrink-0" />
       <span>
         <span className="block text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</span>
-        <span className="block text-lg font-black text-slate-900">{team.name}</span>
+        <span className={`block text-lg font-black ${dimmed ? "text-slate-400" : "text-slate-900"}`}>
+          {team.name}
+        </span>
         {record && <span className="block text-sm text-slate-500">{record} record</span>}
       </span>
     </Link>

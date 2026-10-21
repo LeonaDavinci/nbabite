@@ -52,3 +52,13 @@ export function formatShortDateIn(iso: string, timeZone: string): string {
     timeZone,
   });
 }
+
+/** Calendar day key (YYYY-MM-DD) in a specific IANA time zone — used for grouping by local game day. */
+export function dateKeyIn(iso: string, timeZone: string): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone,
+  }).format(new Date(iso));
+}

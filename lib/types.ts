@@ -39,6 +39,14 @@ export interface Player {
   headshot?: string;
 }
 
+export type GameStatus = "scheduled" | "live" | "final";
+
+export interface PointsLeader {
+  name: string;
+  teamTricode: string;
+  points: number;
+}
+
 export interface Game {
   id: string;
   /** Official NBA game id (e.g. "0022600001"), scraped from NBA.com. */
@@ -49,7 +57,14 @@ export interface Game {
   awayTeamSlug: string;
   /** Tip-off in UTC (ISO 8601). */
   date: string;
-  status: "scheduled";
+  /** Lifecycle state derived from NBA's gameStatus (1 = scheduled, 2 = live, 3 = final). */
+  status: GameStatus;
+  /** NBA's own status text, e.g. "Final", "Final/OT", "4th Qtr", "9:30 pm ET". */
+  statusText?: string;
+  homeScore?: number | null;
+  awayScore?: number | null;
+  /** Game-high scorers, when the game has started. */
+  pointsLeaders?: PointsLeader[];
   arena: string;
   arenaCity?: string;
   arenaState?: string;

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { TEAMS, GAMES, ARTICLES, starPlayers, teamForTag } from "@/lib/data";
+import { TEAMS, ARTICLES, starPlayers, teamForTag, getUpcomingGames, getRecentResults } from "@/lib/data";
 import { GameCard } from "@/components/GameCard";
 import { PlayerCard } from "@/components/PlayerCard";
 import { TeamCard } from "@/components/TeamCard";
 import { ArticleCard } from "@/components/ArticleCard";
 import { TeamLogo } from "@/components/TeamLogo";
+
+// Revalidate every 5 minutes so scores / "upcoming" stay current after deploys.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "NBABite - watch nba game every | NBA Streams",
@@ -15,7 +18,8 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const stars = starPlayers().slice(0, 8);
-  const featuredGames = GAMES.slice(0, 6);
+  const featuredGames = getUpcomingGames(6);
+  const recentResults = getRecentResults(3);
   const latestNews = ARTICLES.slice(0, 3);
   const breaking = ARTICLES.find((a) => a.breaking);
 
@@ -29,8 +33,9 @@ export default function HomePage() {
             <span className="text-nba-red">nbabite</span> - your nba streams home website
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-600">
-            The 2026-27 season tips off <strong>Oct 20</strong>. Get schedules, scores, every team, the biggest stars —
-            LeBron James, Stephen Curry, Victor Wembanyama — and the legal ways to watch NBA basketball, all in one place.
+            The 2026-27 season is <strong>underway</strong>. Live scores, every matchup, all 30 teams, the biggest
+            stars — LeBron James, Stephen Curry, Victor Wembanyama — and the legal ways to watch NBA basketball,
+            all in one place.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/schedule" className="rounded-lg bg-nba-red px-5 py-3 font-bold text-white shadow-card transition hover:bg-nba-blue">
@@ -75,9 +80,26 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* RECENT RESULTS */}
+      {recentResults.length > 0 && (
+        <section className="mx-auto max-w-content px-4 pt-12">
+          <SectionHeader
+            title="Latest NBA Results"
+            subtitle="Final scores from the most recent games"
+            href="/schedule"
+            cta="All results"
+          />
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {recentResults.map((g) => (
+              <GameCard key={g.id} game={g} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* UPCOMING GAMES */}
       <section className="mx-auto max-w-content px-4 py-12">
-        <SectionHeader title="Upcoming NBA Games" subtitle="Opening week of the 2026-27 season — from Oct 20" href="/schedule" cta="Full schedule" />
+        <SectionHeader title="Upcoming NBA Games" subtitle="The next tip-offs on the 2026-27 schedule" href="/schedule" cta="Full schedule" />
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredGames.map((g) => (
             <GameCard key={g.id} game={g} />
