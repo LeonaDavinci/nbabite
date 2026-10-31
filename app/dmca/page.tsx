@@ -5,11 +5,9 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export const metadata: Metadata = {
   title: "Copyright & DMCA Policy",
   description:
-    "NBABite hosts no game footage or audio. Our copyright policy, takedown contact and counter-notification process for rights holders and broadcasters.",
+    "NBABite hosts no game footage or audio. Our copyright policy, takedown requirements and counter-notification process for rights holders.",
   alternates: { canonical: "/dmca" },
 };
-
-const CONTACT = "dmca@nbabite.org";
 
 export default function DmcaPage() {
   return (
@@ -57,12 +55,10 @@ export default function DmcaPage() {
 
         <h2 className="mt-8 text-2xl font-black text-slate-900">3. Sending a takedown notice</h2>
         <p className="mt-3 text-slate-700">
-          If you believe material on this site infringes your copyright, email{" "}
-          <a href={`mailto:${CONTACT}`} className="font-semibold text-nba-blue hover:underline">
-            {CONTACT}
-          </a>{" "}
-          with the subject line <em>&quot;DMCA notice&quot;</em>. To be actionable under 17 U.S.C. § 512(c)(3), your
-          notice should include:
+          Notices reach the site operator through the public WHOIS contact record for <strong>nbabite.org</strong>
+          {" "}(the registrar forwards messages sent to the privacy-protected address), or through the search engine or
+          platform on which the page was found — those notices are passed on to us. To be actionable under 17 U.S.C.
+          § 512(c)(3), a notice should include:
         </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-slate-700">
           <li>A physical or electronic signature of the copyright owner or an authorized agent.</li>
@@ -90,7 +86,7 @@ export default function DmcaPage() {
         <h2 className="mt-8 text-2xl font-black text-slate-900">4. Counter-notification</h2>
         <p className="mt-3 text-slate-700">
           If your material was removed and you believe that was a mistake or misidentification, you may send a
-          counter-notice to the same address. It must include your signature, identification of the removed material
+          counter-notice through the same contact channel. It must include your signature, identification of the removed material
           and its prior location, a statement under penalty of perjury that you have a good-faith belief the material
           was removed by mistake, your name, address and phone number, and consent to the jurisdiction of the federal
           district court for your address (or, if outside the United States, any judicial district in which we may be
