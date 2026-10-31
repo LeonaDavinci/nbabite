@@ -401,6 +401,16 @@ export default function GamePage({ params }: { params: { id: string } }) {
             Complete legal streaming guide
           </Link>
         </div>
+
+        <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs leading-relaxed text-slate-500">
+          NBABite is a schedule and information site. We do not host, stream, embed or link to any game broadcast,
+          highlight or other video — every link above goes to the broadcaster&apos;s own official service. Game
+          footage is the property of the NBA and its broadcast partners. See our{" "}
+          <Link href="/dmca" className="font-semibold text-nba-blue hover:underline">
+            copyright policy
+          </Link>
+          .
+        </p>
       </section>
 
       {/* SAME-DAY GAMES */}

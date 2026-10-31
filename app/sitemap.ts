@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/news`, priority: 0.8, changeFrequency: "daily" as const },
     { url: `${base}/watch`, priority: 0.8, changeFrequency: "monthly" as const },
     { url: `${base}/about`, priority: 0.4, changeFrequency: "yearly" as const },
+    { url: `${base}/dmca`, priority: 0.2, changeFrequency: "yearly" as const },
   ].map((r) => ({ ...r, lastModified: now }));
 
   const teamRoutes = TEAMS.map((t) => ({

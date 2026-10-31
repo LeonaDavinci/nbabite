@@ -23,6 +23,7 @@ const COLS = [
     links: [
       { href: "/about", label: "About NBABite" },
       { href: "/about#disclaimer", label: "Disclaimer" },
+      { href: "/dmca", label: "Copyright & DMCA" },
     ],
   },
 ];

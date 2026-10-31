@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Team } from "@/lib/types";
+import { TeamLogo } from "@/components/TeamLogo";
 
 export function TeamCard({ team }: { team: Team }) {
   return (
@@ -11,12 +12,7 @@ export function TeamCard({ team }: { team: Team }) {
         className="flex h-24 items-center justify-center border-b-4 bg-slate-50"
         style={{ borderColor: team.primaryColor }}
       >
-        <img
-          src={`/images/teams/${team.slug}.png`}
-          alt={`${team.name} logo`}
-          className="h-16 w-auto object-contain"
-          loading="lazy"
-        />
+        <TeamLogo slug={team.slug} size={64} />
       </div>
       <div className="p-4">
         <h3 className="font-bold text-slate-900 group-hover:text-nba-blue">{team.name}</h3>

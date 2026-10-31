@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TEAMS, getTeam, getPlayersByTeam } from "@/lib/data";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PlayerCard } from "@/components/PlayerCard";
+import { TeamLogo } from "@/components/TeamLogo";
 import { JsonLd } from "@/components/JsonLd";
 import { teamJsonLd, pageMetadata, metaDescription } from "@/lib/seo";
 
@@ -53,11 +54,7 @@ export default function TeamPage({ params }: { params: { slug: string } }) {
               <p className="mt-2 max-w-xl text-white/90">{team.description}</p>
             </div>
             <div className="flex items-center justify-center rounded-xl bg-white/95 p-4">
-              <img
-                src={`/images/teams/${team.slug}.png`}
-                alt={`${team.name} logo`}
-                className="h-24 w-auto object-contain"
-              />
+              <TeamLogo slug={team.slug} size={96} />
             </div>
           </div>
         </div>

@@ -1,6 +1,11 @@
 import { Player } from "@/lib/types";
 import { getTeam } from "@/lib/data";
 
+/**
+ * Initials-only avatar. Player headshots are third-party photographs
+ * (NBA Entertainment / Getty), so we never render them — the previous
+ * version shipped two of them in /public/images/players.
+ */
 export function PlayerAvatar({
   player,
   size = 24,
@@ -10,28 +15,17 @@ export function PlayerAvatar({
   size?: number;
   className?: string;
 }) {
-  if (player.headshot) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={player.headshot}
-        alt={`${player.name} headshot`}
-        width={size}
-        height={size}
-        loading="lazy"
-        className={`shrink-0 rounded-full object-cover ring-1 ring-slate-200 ${className}`}
-        style={{ width: size, height: size }}
-      />
-    );
-  }
   const team = getTeam(player.teamSlug);
   return (
     <span
-      className="grid shrink-0 place-items-center rounded-full font-black text-white"
+      aria-hidden="true"
+      className={`grid shrink-0 place-items-center rounded-full font-black text-white ring-1 ring-black/10 ${className}`}
       style={{
         width: size,
         height: size,
-        background: team?.primaryColor ?? "#1D428A",
+        background: `linear-gradient(135deg, ${team?.primaryColor ?? "#1D428A"}, ${
+          team?.secondaryColor ?? "#C8102E"
+        })`,
         fontSize: Math.round(size * 0.4),
       }}
     >
