@@ -143,6 +143,75 @@ async function getJson(url) {
     });
   }
 
+  // ---------------------------------------------------------------
+  // Backfill from per-game boxscores.
+  //
+  // scheduleLeagueV2_1.json is a season-level snapshot: for anything that
+  // tipped off since the snapshot was last refreshed it still reports
+  // gameStatus=1 (scheduled, 0-0). Those games used to fall through every
+  // filter on the site — too late for "upcoming", not "final" — so whole
+  // game nights (e.g. Oct 30) silently disappeared.
+  //
+  // The boxscore feed is authoritative per game, so anything that should
+  // have finished is re-read from there.
+  // ---------------------------------------------------------------
+  const TIPOFF_TO_FINAL_MS = 3 * 3600 * 1000; // a game is over ~3h after tip-off
+  const pending = games.filter(
+    (g) => g.status !== "final" && Date.parse(g.date) + TIPOFF_TO_FINAL_MS < Date.now(),
+  );
+
+  if (pending.length) {
+    console.log("backfilling " + pending.length + " game(s) from boxscore feed...");
+    let cursor = 0;
+    let patched = 0;
+    async function worker() {
+      while (cursor < pending.length) {
+        const g = pending[cursor++];
+        try {
+          const b = await getJson(
+            "https://cdn.nba.com/static/json/liveData/boxscore/boxscore_" + g.gameId + ".json",
+          );
+          const bg = b.game;
+          if (!bg) continue;
+          const st = Number(bg.gameStatus);
+          if (st !== 2 && st !== 3) continue; // still not started / postponed
+          g.status = st === 3 ? "final" : "live";
+          g.statusText = clean(bg.gameStatusText) || (st === 3 ? "Final" : "Live");
+          g.homeScore = Number(bg.homeTeam?.score) || 0;
+          g.awayScore = Number(bg.awayTeam?.score) || 0;
+          const scorers = [];
+          for (const side of [bg.awayTeam, bg.homeTeam]) {
+            for (const p of side?.players || []) {
+              const pts = Number(p.statistics?.points) || 0;
+              if (pts > 0) {
+                scorers.push({
+                  name: clean(`${p.firstName || ""} ${p.familyName || ""}`) || clean(p.name),
+                  teamTricode: side.teamTricode,
+                  points: pts,
+                });
+              }
+            }
+          }
+          scorers.sort((a, b2) => b2.points - a.points);
+          if (scorers.length) g.pointsLeaders = scorers.slice(0, 3);
+          patched++;
+        } catch (e) {
+          console.log("  ! " + g.id + " (" + e.message + ")");
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: 6 }, worker));
+    console.log("backfilled " + patched + "/" + pending.length + " games");
+
+    const stillStale = games.filter(
+      (g) => g.status !== "final" && Date.parse(g.date) + TIPOFF_TO_FINAL_MS < Date.now(),
+    );
+    if (stillStale.length) {
+      console.log("WARNING " + stillStale.length + " past game(s) still without a final score:");
+      stillStale.slice(0, 10).forEach((g) => console.log("  - " + g.id + " " + g.date));
+    }
+  }
+
   games.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
   const stamp = new Date().toISOString();

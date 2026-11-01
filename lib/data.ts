@@ -230,6 +230,20 @@ export function getFinishedGames(): Game[] {
   return GAMES.filter((g) => g.status === "final").sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
+/**
+ * Tip-off is more than four hours gone but the feed still says "scheduled".
+ * That means the snapshot has not caught up yet — those games are neither
+ * upcoming nor final, so pages must show them explicitly instead of dropping
+ * a whole game night. The generator backfills these from the boxscore feed;
+ * this is the safety net for the gap between regenerations.
+ */
+export function getPendingResultGames(): Game[] {
+  const cutoff = Date.now() - UPCOMING_GRACE_MS;
+  return GAMES.filter((g) => g.status === "scheduled" && Date.parse(g.date) < cutoff).sort(
+    (a, b) => Date.parse(b.date) - Date.parse(a.date),
+  );
+}
+
 /** Winner of a finished game, or null for ties/unplayed games. */
 export function gameWinner(g: Game): "home" | "away" | null {
   if (g.status !== "final" || g.homeScore == null || g.awayScore == null) return null;

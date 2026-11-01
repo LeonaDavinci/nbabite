@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getTeam, getUpcomingGames, getFinishedGames } from "@/lib/data";
+import { getTeam, getUpcomingGames, getFinishedGames, getPendingResultGames } from "@/lib/data";
 import { GameCard } from "@/components/GameCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 export default function SchedulePage() {
   const upcoming = getUpcomingGames();
   const results = getFinishedGames();
+  const pendingResults = getPendingResultGames();
   const live = upcoming.filter((g) => g.status === "live");
 
   // Group upcoming games by calendar day in Eastern time (how US fans think about game nights).
@@ -38,6 +39,16 @@ export default function SchedulePage() {
     return acc;
   }, {});
   const days = Object.keys(byDay).sort();
+
+  // Results grouped the same way, so a game night never disappears just because
+  // it is no longer "upcoming" — the last five nights stay browsable by date.
+  const resultsByDay = results.reduce<Record<string, typeof results>>((acc, g) => {
+    const key = dateKeyIn(g.date, ET);
+    (acc[key] ||= []).push(g);
+    return acc;
+  }, {});
+  // Newest night first — "Latest results" should read backwards from today.
+  const resultDays = Object.keys(resultsByDay).sort().slice(-4).reverse();
 
   const nationalGames = upcoming.filter((g) => !/league pass/i.test(g.broadcast)).length;
 
@@ -91,8 +102,8 @@ export default function SchedulePage() {
         </p>
       </section>
 
-      {/* RECENT RESULTS */}
-      {results.length > 0 && (
+      {/* RECENT RESULTS — grouped by game night, last five nights */}
+      {(resultDays.length > 0 || pendingResults.length > 0) && (
         <section className="mx-auto max-w-content px-4 pb-4">
           <div className="mt-8 flex flex-wrap items-baseline gap-x-3 border-b-2 border-slate-200 pb-2">
             <h2 className="text-xl font-black text-slate-900">Latest results</h2>
@@ -100,11 +111,37 @@ export default function SchedulePage() {
               {results.length} final{results.length === 1 ? "" : "s"}
             </span>
           </div>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {results.map((g) => (
-              <GameCard key={g.id} game={g} />
-            ))}
-          </div>
+
+          {pendingResults.length > 0 && (
+            <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+              <h3 className="text-sm font-black uppercase tracking-wide text-amber-900">Awaiting final score</h3>
+              <p className="mt-1 text-sm text-amber-900/80">
+                These games have tipped off but the official feed has not published a final score yet. They are
+                listed here rather than dropped from the schedule.
+              </p>
+              <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {pendingResults.map((g) => (
+                  <GameCard key={g.id} game={g} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {resultDays.map((day) => (
+            <div key={day} className="mt-6">
+              <div className="flex flex-wrap items-baseline gap-x-3 border-b border-slate-200 pb-2">
+                <h3 className="text-lg font-black text-slate-900">{formatDateIn(`${day}T16:00:00Z`, ET)}</h3>
+                <span className="ml-auto text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  {resultsByDay[day].length} {resultsByDay[day].length === 1 ? "game" : "games"}
+                </span>
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {resultsByDay[day].map((g) => (
+                  <GameCard key={g.id} game={g} />
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       )}
 

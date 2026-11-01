@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "games": "node scripts/gen-games.cjs",
+    "refresh": "node scripts/gen-games.cjs && next build",
     "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
