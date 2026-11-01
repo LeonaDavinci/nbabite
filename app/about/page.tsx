@@ -32,9 +32,9 @@ export default function AboutPage() {
         <p className="mt-3 text-slate-700">
           NBABite is not affiliated with the National Basketball Association, any team, or any broadcaster. Team
           and player names are trademarks of their respective owners and are used here for identification and
-          commentary only. This site does not host, embed or link to unauthorized streams, and it displays no
-          club logos, broadcast graphics or player photographs. For official broadcasts, please use the licensed
-          providers listed on our watch page. See our{" "}
+          commentary only. This site does not host, embed or link to unauthorized streams. Team icons are original
+          badges drawn for this site — no club logos, broadcast graphics or player photographs are reproduced. For
+          official broadcasts, please use the licensed providers listed on our watch page. See our{" "}
           <Link href="/dmca" className="font-semibold text-nba-blue hover:underline">copyright policy</Link> for
           takedown contacts.
         </p>

@@ -43,9 +43,10 @@ export default function DmcaPage() {
             website, the league&apos;s official properties, or a licensed pay-TV service.
           </li>
           <li>
-            <strong>No third-party logos or photographs.</strong> Team identity is shown with plain text monograms
-            (for example <span className="font-mono font-bold">BOS</span>) drawn in CSS. We host no club logos,
-            league marks, broadcast graphics or player headshots.
+            <strong>No third-party logos or photographs.</strong> Team identity is shown with original geometric
+            badges drawn for this site — a colour field, an abstract shape and a three-letter code. We host no club
+            logos, league marks, broadcast graphics or player headshots, and nothing on the site is a redraw of an
+            official mark.
           </li>
         </ul>
         <p className="mt-3 text-slate-700">
