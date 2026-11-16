@@ -1,7 +1,7 @@
 // AUTO-GENERATED — do not edit by hand.
 // Source: NBA.com official schedule (cdn.nba.com scheduleLeagueV2) + live scoreboard overlay.
 // Regenerate with: node scripts/gen-games.cjs [--days-ahead=N]
-// Generated: 2026-11-16T16:00:36.480Z
+// Generated: 2026-11-16T16:00:51.545Z
 // Range: 2026-10-20 .. 2026-12-27 (435 regular-season games; 197 final, 0 live)
 import { Game } from "./types";
 
